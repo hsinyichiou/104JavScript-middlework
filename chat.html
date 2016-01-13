@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Hsin Yi 110110618</title>
+  <link rel="stylesheet" href="6.css">
+  <style type="text/css">
+
+  body {
+    padding-left: 11em;
+    color: darkblue;
+    background-color: #E6E6FA }
+  ul.navbar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    width: 9em }
+  ul.navbar li {
+    background: white;
+    margin: 0.5em 0;
+    padding: 0.3em;
+    border-right: 1em solid fuchsia }
+  ul.navbar a {
+    text-decoration: none }
+  a:link {
+    color: #008844 }
+  a:visited {
+    color: #00DDAA }
+  </style>
+
+<script src="http://localhost:8124/socket.io/socket.io.js"></script> 
+<script>
+var socket = io.connect('http://localhost:8124'); 
+socket.on('connect', function() {
+  socket.emit('addme', prompt('What is your name?')); 
+});
+
+socket.on('chat',function(username, data) { 
+  var p = document.createElement('p'); 
+  p.innerHTML = username + ': ' + data;
+  document.getElementById('output').appendChild(p); 
+});
+
+window.addEventListener('load',function() { 
+  document.getElementById('sendtext').addEventListener('click',function() {
+    var text = document.getElementById('data').value; 
+    socket.emit('sendchat', text);
+  }, false); 
+}, false);
+
+</script>
+
+</head>
+<body>
+<ul class="navbar" style="margin-top:8em">
+  <li><a href="1.html"><font face="Algerian" size="4"><b>HOME page</b></a>
+  <li><a href="4.html"><font face="標楷體" size="3"><b>金門大學の傳統</b></a>
+  <li><a href="5.html"><font face="標楷體" size="3"><b>留言</b></a>
+  <li><a href="chat.html"><font face="標楷體" size="3"><b>聊天室</b></a>
+</ul>
+
+<p align="center"><font face="華康鋼筆體W2" color="darkblue" align="center" size="7"><b>CHaTRooM</b></P>
+
+<body>
+<div id="output"></div> <div id="send">
+<input type="text" id="data" size="100" /><br />
+<input type="button" id="sendtext" value="send Message" /> </div>
+</body>
+</html>
